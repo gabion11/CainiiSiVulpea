@@ -1,134 +1,274 @@
 #include <iostream>
 #include <graphics.h>
 #include <winbgim.h>
-
+#include <stdlib.h>
 using namespace std;
-int MatriceTabla[8][8];
-void DisplayCharacters(int stanga, int sus, int latura)
+int numar,width,height,latura,sus,stanga;
+double TablaDeJoc[1000][1000],TablaPoziti[20][20];
+void PunerePiese();
+void DesenCaine(int x,int y,int z,int w);
+
+
+
+void AfisareMutari(int linia,int coloana)
 {
-    for (int i=0; i<8; i++)
-    {
-        for(int j=0; j<8; j++)
-        {
-            if(MatriceTabla[i][j] == 1)
-            {
-                 readimagefile("Fox1.gif",stanga + latura*j,sus + latura*i,(stanga + latura) + latura*j, (sus + latura) + latura*i);
+int x1, y1, x2, y2;
+int xmijloc, ymijloc;
+int x,y;
+
+int ok;setcolor(RED); setfillstyle(SOLID_FILL,RED);
+
+
+
+PunerePiese();
+x1=stanga+latura*(coloana-1); y1=sus+latura*(linia-1);
+x2=x1+latura; y2=y1+latura;
+xmijloc=(x1+x2)/2; ymijloc=(y1+y2)/2;
+setlinestyle(SOLID_LINE,2,8);
+if(TablaDeJoc[linia][coloana]==1)
+if(linia!=1)
+       if(coloana==1)
+         {
+
+          if(TablaDeJoc[linia-1][coloana+1]!=1&&TablaDeJoc[linia-1][coloana+1]!=2) line(xmijloc,ymijloc,xmijloc+50,ymijloc-50);}
+        else if(coloana==8)
+           {
+
+            if(TablaDeJoc[linia-1][coloana-1]!=1&&TablaDeJoc[linia-1][coloana-1]!=2)
+                line(xmijloc,ymijloc,xmijloc-50,ymijloc-50);}
+            else
+                {if(TablaDeJoc[linia-1][coloana-1]!=1&&TablaDeJoc[linia-1][coloana-1]!=2)
+                  line(xmijloc,ymijloc,xmijloc-50,ymijloc-50);
+                 if(TablaDeJoc[linia-1][coloana+1]!=1&&TablaDeJoc[linia-1][coloana+1]!=2)
+                  line(xmijloc,ymijloc,xmijloc+50,ymijloc-50);
             }
 
-            else
-            {
-                if(MatriceTabla[i][j] == 2)
-                {
-                    readimagefile("Dog4.gif",stanga + latura*j,sus + latura*i,(stanga + latura) + latura*j, (sus + latura) + latura*i);
-                }
-            }
-        }
-    }
+
+if(TablaDeJoc[linia][coloana]==2)
+
+    if(linia==1)
+        if(coloana==8)
+           {if(TablaDeJoc[linia+1][coloana-11]!=1) line(xmijloc,ymijloc,xmijloc-50,ymijloc+50);}
+          else if(coloana==1)
+                {if(TablaDeJoc[linia+1][coloana+1]!=1)line(xmijloc,ymijloc,xmijloc+50,ymijloc+50);}
+                 else
+                 {if(TablaDeJoc[linia+1][coloana-1]!=1)line(xmijloc,ymijloc,xmijloc-50,ymijloc+50);
+                  if(TablaDeJoc[linia+1][coloana+1]!=1)line(xmijloc,ymijloc,xmijloc+50,ymijloc+50);
+                 }
+
+                 else { if(TablaDeJoc[linia-1][coloana+1]!=1) line(xmijloc,ymijloc,xmijloc+50,ymijloc-50);
+                        if(TablaDeJoc[linia-1][coloana-1]!=1) line(xmijloc,ymijloc,xmijloc-50,ymijloc-50);
+                        if(TablaDeJoc[linia+1][coloana+1]!=1) line(xmijloc,ymijloc,xmijloc+50,ymijloc+50);
+                        if(TablaDeJoc[linia+1][coloana-1]!=1) line(xmijloc,ymijloc,xmijloc-50,ymijloc+50);}
+
+
+
 
 }
 
 void meniu()
-{
-    char sir[30];
-    bar(290,80,510,155);
-    strcpy(sir,"MENIU");
-    setcolor(RED);
-    settextstyle(8,HORIZ_DIR,18);
-    outtextxy(300,85,sir);
-    settextstyle(9,HORIZ_DIR,13);
-    strcpy(sir,"CALCULATOR VS JUCATOR");
-    outtextxy(200,185,sir);
-    strcpy(sir,"JUCATOR VS JUCATOR");
-    outtextxy(230,255,sir);
-    strcpy(sir,"CUM TE JOCI?");
-    outtextxy(300,325,sir);
-    strcpy(sir,"SETARI");
-    outtextxy(350,395,sir);
+{char sir[30];
+bar(290,80,510,155);
+strcpy(sir,"MENIU");
+setcolor(RED);
+settextstyle(8,HORIZ_DIR,18);
+outtextxy(300,85,sir);
+settextstyle(9,HORIZ_DIR,13);
+strcpy(sir,"CALCULATOR VS JUCATOR");
+outtextxy(200,185,sir);
+strcpy(sir,"JUCATOR VS JUCATOR");
+outtextxy(230,255,sir);
+strcpy(sir,"CUM TE JOCI?");
+outtextxy(300,325,sir);
+strcpy(sir,"SETARI");
+outtextxy(350,395,sir);
+
 }
 
-int numar, width, height, latura, sus, stanga;
-
-void DesenCaine(int x, int y, int z, int w)
+void DesenCaine(int x,int y,int z,int w)
 {
-    setcolor(LIGHTRED);
-    setfillstyle(SOLID_FILL, LIGHTRED);
-    fillellipse(x, y, z, w);
+   setcolor(LIGHTRED); setfillstyle(SOLID_FILL,LIGHTRED);
+fillellipse(x,y,z,w);
+}
+void Tabla()
+{
+int i,j,x,a,b,c,d;
+numar=8;
+width=560;
+height=560;
+latura=width/numar;
+sus=(getmaxy()-width)/2;
+stanga=(getmaxx()-height)/2;
+setbkcolor(BLUE); clearviewport(); setcolor(0);
+for(i=1;i<=8;i++)
+    for(j=1;j<=8;j++) if(i==1||j==8||j==1||i==8) TablaPoziti[i][j]=-1;
+
+
+
+
+for(i=1; i<=numar; i++)
+{x++;for(j=1; j<=numar; j++)
+
+{if (x%2==0){setcolor(0);setfillstyle(SOLID_FILL,0);}
+else {setcolor(15);setfillstyle(SOLID_FILL,15);}
+    bar(stanga+latura*(i-1),sus+latura*(j-1),stanga+latura*(i-1)+latura,sus+latura*(j-1)+latura);x++;
+
+}}
+TablaDeJoc[8][1]=1;
+TablaDeJoc[8][3]=1;
+TablaDeJoc[8][5]=1;
+TablaDeJoc[8][7]=1;
+
+
+TablaDeJoc[1][4]=2;
+PunerePiese();
+
 }
 
-void TablaDeJoc()
+void PunerePiese()
 {
-    int i, j, x, a, b, c, d;
-    numar = 8;
-    width = 560;
-    height = 560;
-    latura = width/numar; //70
-    sus = (getmaxy()-width) / 2; //19
-    stanga = (getmaxx()-height) / 2; //119
-    setbkcolor(RED);
-    clearviewport();
-    setcolor(0);
-    for(i=1; i<=numar; i++)
+int i,j;
+int x1, y1, x2, y2;
+int xmijloc, ymijloc;
+int linia,coloana,x=0,y;
+
+numar=8;
+width=560;
+height=560;
+latura=width/numar;
+sus=(getmaxy()-width)/2;
+stanga=(getmaxx()-height)/2;
+
+for(i=1; i<=numar; i++)
+{x++;for(j=1; j<=numar; j++)
+
+{if (x%2==0){setcolor(0);setfillstyle(SOLID_FILL,0);}
+else {setcolor(15);setfillstyle(SOLID_FILL,15);}
+    bar(stanga+latura*(i-1),sus+latura*(j-1),stanga+latura*(i-1)+latura,sus+latura*(j-1)+latura);x++;
+}}
+
+for(linia=1; linia<=8; linia++)
+     for(coloana=1;coloana <=8; coloana++)
+        if( TablaDeJoc[linia][coloana]==1)
+         {x1=stanga+latura*(coloana-1); y1=sus+latura*(linia-1);
+          x2=x1+latura; y2=y1+latura;
+          xmijloc=(x1+x2)/2; ymijloc=(y1+y2)/2;
+          DesenCaine(xmijloc,ymijloc,18,18); }
+          else if(TablaDeJoc[linia][coloana]==2)
+          {
+              x1=stanga+latura*(coloana-1); y1=sus+latura*(linia-1);
+              x2=x1+latura; y2=y1+latura;
+              xmijloc=(x1+x2)/2; ymijloc=(y1+y2)/2;
+              setcolor(RED); setfillstyle(SOLID_FILL,RED);
+              bar(xmijloc-20,ymijloc-20,xmijloc+20,ymijloc+20);
+          }
+}
+void JucatorVsJucator()
+{int x1, y1, x2, y2;
+int xmijloc, ymijloc;
+int linia,coloana,x,y,linia1,coloana1;
+int nr=0,ok,okk;
+Tabla();
+    while(1)
     {
-        x++;
-        for(j=1; j<=numar; j++)
-        {
-            if(x%2==0)
+        ok=1;
+        while(nr%2==0)
+        if(ismouseclick(WM_LBUTTONDOWN))
             {
-                setcolor(0);
-                setfillstyle(SOLID_FILL, 0);
-            }
-            else
-            {
-                setcolor(15);
-                setfillstyle(SOLID_FILL, 15);
-            }
-            bar(stanga + latura*(i-1), sus + latura*(j-1), stanga + latura*(i-1) + latura, sus + latura*(j-1) + latura);
+            clearmouseclick(WM_LBUTTONDOWN);
+            x=mousex();
+            y=mousey();
+            linia=(y-sus)/latura+1;
+            coloana=(x-stanga)/latura+1;
 
-            x++;
-        }
-    }
-    //DesenCaine(151, 547, 18, 18);
-    //DesenCaine(295, 547, 18, 18);
-    //DesenCaine(435, 547, 18, 18);
-    //DesenCaine(576, 547, 18, 18);
-    setcolor(RED);
-    setfillstyle(SOLID_FILL, RED);
-    bar(341, 30, 386, 75);
-    MatriceTabla[0][3]=1;
-    MatriceTabla[7][0]=2;
-    MatriceTabla[7][2]=2;
-    MatriceTabla[7][4]=2;
-    MatriceTabla[7][6]=2;
-    MatriceTabla[6][2]=3;
-    DisplayCharacters(stanga, sus, latura);
+            if(TablaDeJoc[linia][coloana]==1)
+                 {
+
+                  AfisareMutari(linia,coloana);
+                  while(ok==1)
+
+
+
+                    if(ismouseclick(WM_LBUTTONDOWN))
+                   {
+                      clearmouseclick(WM_LBUTTONDOWN);
+                      x=mousex();
+                      y=mousey();
+                      linia1=(y-sus)/latura+1;
+                      coloana1=(x-stanga)/latura+1;
+
+                      if((coloana1==coloana+1&&linia1==linia-1)||(coloana1==coloana-1&&linia1==linia-1))
+                        {TablaDeJoc[linia][coloana]=0;
+                         TablaDeJoc[linia1][coloana1]=1;
+                         nr++;
+
+                        }
+                        ok=0;
+
+
+                   }
+
+                        }
+
+                       PunerePiese();}
+                       ok=1;
+            while(nr%2==1)
+
+             if(ismouseclick(WM_LBUTTONDOWN))
+            {
+            clearmouseclick(WM_LBUTTONDOWN);
+            x=mousex();
+            y=mousey();
+            linia=(y-sus)/latura+1;
+            coloana=(x-stanga)/latura+1;
+            if(TablaDeJoc[linia][coloana]==2)
+             {
+                 AfisareMutari(linia,coloana);
+
+              while(ok==1)
+               if(ismouseclick(WM_LBUTTONDOWN))
+                   {
+                      clearmouseclick(WM_LBUTTONDOWN);
+                      x=mousex();
+                      y=mousey();
+                      linia1=(y-sus)/latura+1;
+                      coloana1=(x-stanga)/latura+1;
+                    if((coloana1==coloana+1&&linia1==linia+1)||(coloana1==coloana+1&&linia1==linia-1)||(coloana1==coloana-1&&linia1==linia+1)||(coloana1==coloana-1&&linia1==linia-1))
+                      {
+                          TablaDeJoc[linia][coloana]=0;
+                          TablaDeJoc[linia1][coloana1]=2;
+                          nr++;ok=0;
+                      }
+
+               }
+            PunerePiese();
+                                 }
 
 }
+                }}
+
 
 int main()
+{initwindow(800,600);
+meniu();
+int a,b;
+int m=0;
+do
+{if(ismouseclick(WM_LBUTTONDOWN))
 {
-    initwindow(800,600);
-    meniu();
-    //TablaDeJoc();
-    int linia, coloana, x, y;
-    int x1, y1, x2, y2;
-    int xmijloc, ymijloc;
-    int m=0;
-    do
+clearmouseclick(WM_LBUTTONDOWN);
+a=mousex();
+b=mousey();
+if(a>220&&a<600&&b>245&&b<275)
+    JucatorVsJucator();
+    else
     {
-        if(ismouseclick(WM_LBUTTONDOWN))
-        {
-            clearmouseclick(WM_LBUTTONDOWN);
-            x = mousex();
-            y = mousey();
-            if(x>220 && x<600 && y>245 && y<275)  // Daca se da click pe Jucator vs Jucator
-            {
-                TablaDeJoc();
-            }
-        }
-    }
-    while(m==0);
 
-    getch();
-    closegraph();
-    return 0;
+    }
+}}
+while(m==0);
+
+  getch();
+  closegraph();
+  return 0;
 }
