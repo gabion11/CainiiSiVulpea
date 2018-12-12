@@ -5,15 +5,38 @@
 using namespace std;
 int numar, width, height, latura, sus, stanga;
 double TablaDeJoc[1000][1000];
+int skinVulpe = 1;
+int skinCaine = 4;
+
 void DisplayCharacters()
 {
 	for (int i = 1; i <= 8; i++)
 		for (int j = 1; j <= 8; j++)
 			if (TablaDeJoc[i][j] == 2) //Valoarea 2 pentru vulpe
-				readimagefile("Fox1.gif", stanga + latura * (j - 1), sus + latura * (i - 1), (stanga + latura) + latura * (j - 1), (sus + latura) + latura * (i - 1));
+            {
+                if(skinVulpe == 1){
+                    readimagefile("Fox1.gif", stanga + latura * (j - 1), sus + latura * (i - 1), (stanga + latura) + latura * (j - 1), (sus + latura) + latura * (i - 1));
+                }
+                if(skinVulpe == 2){
+                    readimagefile("Fox2.gif", stanga + latura * (j - 1), sus + latura * (i - 1), (stanga + latura) + latura * (j - 1), (sus + latura) + latura * (i - 1));
+                }
+                if(skinVulpe == 3){
+                    readimagefile("Fox3.gif", stanga + latura * (j - 1), sus + latura * (i - 1), (stanga + latura) + latura * (j - 1), (sus + latura) + latura * (i - 1));
+                }
+            }
 			else
 				if (TablaDeJoc[i][j] == 1) //Valoarea 1 pentru caini
-					readimagefile("Dog4.gif", stanga + latura * (j - 1), sus + latura * (i - 1), (stanga + latura) + latura * (j - 1), (sus + latura) + latura * (i - 1));
+                {
+                    if(skinCaine == 4){
+                        readimagefile("Dog4.gif", stanga + latura * (j - 1), sus + latura * (i - 1), (stanga + latura) + latura * (j - 1), (sus + latura) + latura * (i - 1));
+                    }
+                    if(skinCaine == 5){
+                        readimagefile("Dog5.gif", stanga + latura * (j - 1), sus + latura * (i - 1), (stanga + latura) + latura * (j - 1), (sus + latura) + latura * (i - 1));
+                    }
+                    if(skinCaine == 6){
+                        readimagefile("Dog6.gif", stanga + latura * (j - 1), sus + latura * (i - 1), (stanga + latura) + latura * (j - 1), (sus + latura) + latura * (i - 1));
+                    }
+                }
 }
 void AfisareMutari(int linia, int coloana) //Sageti care indica unde se poate efectua mutarea
 {
@@ -66,6 +89,7 @@ void AfisareMutari(int linia, int coloana) //Sageti care indica unde se poate ef
 }
 void meniu()
 {
+    clearviewport();
 	char sir[30];
 	bar(290, 80, 510, 155);         // void bar (int left, int top, int right, int bottom);
 	strcpy(sir, "MENIU");
@@ -77,10 +101,12 @@ void meniu()
 	outtextxy(200, 185, sir);
 	strcpy(sir, "JUCATOR VS JUCATOR");
 	outtextxy(230, 255, sir);
+	strcpy(sir, "SKINS");
+	outtextxy(358, 325, sir);
 	strcpy(sir, "CUM TE JOCI?");
-	outtextxy(300, 325, sir);
+	outtextxy(300, 395, sir);
 	strcpy(sir, "SETARI");
-	outtextxy(350, 395, sir);
+	outtextxy(350, 465, sir);
 }
 void Tabla()
 {
@@ -280,6 +306,99 @@ void JucatorVsJucator()
 			}
 	}
 }
+
+void DisplaySkinsWindow(){
+
+    setbkcolor(BLACK);
+	clearviewport();
+	char sir[30];
+	setcolor(WHITE);
+	strcpy(sir, "SKINS");
+	settextstyle(9, HORIZ_DIR, 16);
+	outtextxy(320, 100, sir);
+
+	setcolor(WHITE);
+	strcpy(sir, "BACK");
+	settextstyle(9, HORIZ_DIR, 14);
+	outtextxy(360, 450, sir);
+
+    if(skinVulpe == 1){
+        readimagefile("Fox1.gif", 40, 240, 160, 360);
+    } else {
+        readimagefile("Fox1.gif", 60, 260, 140, 340);
+    }
+    if(skinVulpe == 2){
+        readimagefile("Fox2.gif", 150, 240, 270, 360);
+    } else {
+        readimagefile("Fox2.gif", 170, 260, 250, 340);
+    }
+    if(skinVulpe == 3){
+        readimagefile("Fox3.gif", 260, 240, 380, 360);
+    } else {
+        readimagefile("Fox3.gif", 280, 260, 360, 340);
+    }
+
+    if(skinCaine == 4){
+        readimagefile("Dog4.gif", 420, 240, 540, 360);
+    } else {
+        readimagefile("Dog4.gif", 440, 260, 520, 340);
+    }
+    if(skinCaine == 5){
+        readimagefile("Dog5.gif", 530, 240, 650, 360);
+    } else {
+        readimagefile("Dog5.gif", 550, 260, 630, 340);
+    }
+    if(skinCaine == 6){
+        readimagefile("Dog6.gif", 640, 240, 760, 360);
+    } else {
+        readimagefile("Dog6.gif", 660, 260, 740, 340);
+    }
+}
+
+void SkinsWindow(){
+    DisplaySkinsWindow();
+
+    int a, b;
+	do
+	{
+		if (ismouseclick(WM_LBUTTONDOWN))
+		{
+			clearmouseclick(WM_LBUTTONDOWN);
+			a = mousex();
+			b = mousey();
+			if (a > 62 && a < 141 && b>264 && b < 336 && skinVulpe != 1){ // click pe primul skin
+                skinVulpe = 1;
+                DisplaySkinsWindow();
+			}
+			if (a > 176 && a < 248 && b>264 && b < 336  && skinVulpe != 2){ // click pe al doilea skin
+                skinVulpe = 2;
+                DisplaySkinsWindow();
+			}
+            if (a > 285 && a < 357 && b>264 && b < 336  && skinVulpe != 3){ // click pe al treilea skin
+                skinVulpe = 3;
+                DisplaySkinsWindow();
+			}
+            if (a > 453 && a < 508 && b>264 && b < 336  && skinCaine != 4){ // click pe al patrulea skin
+                skinCaine = 4;
+                DisplaySkinsWindow();
+			}
+            if (a > 553 && a < 629 && b>264 && b < 336 && skinCaine != 5){ // click pe al cincilea skin
+                skinCaine = 5;
+                DisplaySkinsWindow();
+			}
+            if (a > 661 && a < 739 && b>264 && b < 336 && skinCaine != 6){ // click pe al saselea skin
+                skinCaine = 6;
+                DisplaySkinsWindow();
+			}
+			if (a > 362 && a < 456 && b>453 && b < 467){ // click pe back
+                meniu();
+                return;
+			}
+
+		}
+	} while (true);
+}
+
 int main()
 {
 	initwindow(800, 600);
@@ -295,9 +414,8 @@ int main()
 			b = mousey();
 			if (a > 220 && a < 600 && b>245 && b < 275)
 				JucatorVsJucator();
-			else
-			{
-			}
+			if (a > 360 && a < 445 && b > 325 && b < 345)
+                SkinsWindow();
 		}
 	} while (m == 0);
 	getch();
