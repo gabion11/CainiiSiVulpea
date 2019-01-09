@@ -373,7 +373,7 @@ void InitializareCalVSJuc()
         readimagefile("Fox2.gif", 150, 240, 270, 360);
     }
     if(skinVulpe == 3){
-        readimagefile("Fox3.gif", 150, 240, 2700, 360);
+        readimagefile("Fox3.gif", 150, 240, 270, 360);
     }
     if(skinCaine == 4){
         readimagefile("Dog4.gif", 530, 240, 650, 360);
