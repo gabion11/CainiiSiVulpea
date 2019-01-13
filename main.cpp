@@ -1,3 +1,4 @@
+
 #include <iostream>
 #include <graphics.h>
 #include <winbgim.h>
@@ -7,40 +8,126 @@ int numar, width, height, latura, sus, stanga;
 double TablaDeJoc[1000][1000];
 int skinVulpe = 1;
 int skinCaine = 4;
+int cx1, cx2, cy1, cy2, vx1, vx2, vy1, vy2;//variabile pentru functia inapoi
 
+void meniu();
+void inapoi()
+{
+	TablaDeJoc[cx1][cy1] = 1;
+	TablaDeJoc[cx2][cy2] = 0;
+	TablaDeJoc[vx1][vy1] = 2;
+	TablaDeJoc[vx2][vy2] = 0;
+
+}
+void undo()
+{
+	{
+		char sir[30];
+		setcolor(1);
+		settextstyle(10, HORIZ_DIR, 3);
+		strcpy(sir, "UNDO");
+		outtextxy(750, 510, sir);
+
+	}
+}
+
+void Backtomenu()
+{
+	char sir[30];
+
+	setcolor(1);
+	settextstyle(10, HORIZ_DIR, 3);
+	strcpy(sir, "MENIU");
+	outtextxy(750, 560, sir);
+
+}
+void Backtodificultate()
+{
+	char sir[30];
+
+	setcolor(1);
+	settextstyle(8, HORIZ_DIR, 3);
+	strcpy(sir, "BACK");
+	outtextxy(750, 560, sir);
+
+}
+void VulpeaCastiga()
+{
+
+	int a, b, ok = 1;
+	cleardevice();
+	readimagefile("fox-revived.jpg", 0, 0, 900, 600);
+	Backtomenu();
+	do {
+		if (ismouseclick(WM_LBUTTONDOWN))
+		{
+			clearmouseclick(WM_LBUTTONDOWN);
+			a = mousex();
+			b = mousey();
+			if (a >= 752 && a <= 821 && b >= 564 && b <= 581) { cleardevice(); meniu(); ok = 0; }
+		}
+	} while (ok);
+}
+void RandulCainilor()
+{
+	char sir[30];
+	setcolor(RED);
+	setfillstyle(SOLID_FILL, RED);
+	bar(900, 260, 780, 280);
+	setcolor(0);
+	settextstyle(10, HORIZ_DIR, 3);
+	strcpy(sir, "Cainii muta");
+	outtextxy(700, 260, sir);
+
+
+
+}
+void RandulVulpei()
+{
+	char sir[30];
+	setcolor(RED);
+	setfillstyle(SOLID_FILL, RED);
+	bar(900, 260, 780, 280);
+	setcolor(0);
+	settextstyle(10, HORIZ_DIR, 3);
+	strcpy(sir, "Vulpea muta");
+	outtextxy(700, 260, sir);
+
+
+}
 void DisplayCharacters()
 {
 	for (int i = 1; i <= 8; i++)
 		for (int j = 1; j <= 8; j++)
 			if (TablaDeJoc[i][j] == 2) //Valoarea 2 pentru vulpe
-            {
-                if(skinVulpe == 1){
-                    readimagefile("Fox1.gif", stanga + latura * (j - 1), sus + latura * (i - 1), (stanga + latura) + latura * (j - 1), (sus + latura) + latura * (i - 1));
-                }
-                if(skinVulpe == 2){
-                    readimagefile("Fox2.gif", stanga + latura * (j - 1), sus + latura * (i - 1), (stanga + latura) + latura * (j - 1), (sus + latura) + latura * (i - 1));
-                }
-                if(skinVulpe == 3){
-                    readimagefile("Fox3.gif", stanga + latura * (j - 1), sus + latura * (i - 1), (stanga + latura) + latura * (j - 1), (sus + latura) + latura * (i - 1));
-                }
-            }
+			{
+				if (skinVulpe == 1) {
+					readimagefile("Fox1.gif", stanga + latura * (j - 1), sus + latura * (i - 1), (stanga + latura) + latura * (j - 1), (sus + latura) + latura * (i - 1));
+				}
+				if (skinVulpe == 2) {
+					readimagefile("Fox2.gif", stanga + latura * (j - 1), sus + latura * (i - 1), (stanga + latura) + latura * (j - 1), (sus + latura) + latura * (i - 1));
+				}
+				if (skinVulpe == 3) {
+					readimagefile("Fox3.gif", stanga + latura * (j - 1), sus + latura * (i - 1), (stanga + latura) + latura * (j - 1), (sus + latura) + latura * (i - 1));
+				}
+			}
 			else
 				if (TablaDeJoc[i][j] == 1) //Valoarea 1 pentru caini
-                {
-                    if(skinCaine == 4){
-                        readimagefile("Dog4.gif", stanga + latura * (j - 1), sus + latura * (i - 1), (stanga + latura) + latura * (j - 1), (sus + latura) + latura * (i - 1));
-                    }
-                    if(skinCaine == 5){
-                        readimagefile("Dog5.gif", stanga + latura * (j - 1), sus + latura * (i - 1), (stanga + latura) + latura * (j - 1), (sus + latura) + latura * (i - 1));
-                    }
-                    if(skinCaine == 6){
-                        readimagefile("Dog6.gif", stanga + latura * (j - 1), sus + latura * (i - 1), (stanga + latura) + latura * (j - 1), (sus + latura) + latura * (i - 1));
-                    }
-                }
+				{
+					if (skinCaine == 4) {
+						readimagefile("Dog4.gif", stanga + latura * (j - 1), sus + latura * (i - 1), (stanga + latura) + latura * (j - 1), (sus + latura) + latura * (i - 1));
+					}
+					if (skinCaine == 5) {
+						readimagefile("Dog5.gif", stanga + latura * (j - 1), sus + latura * (i - 1), (stanga + latura) + latura * (j - 1), (sus + latura) + latura * (i - 1));
+					}
+					if (skinCaine == 6) {
+						readimagefile("Dog6.gif", stanga + latura * (j - 1), sus + latura * (i - 1), (stanga + latura) + latura * (j - 1), (sus + latura) + latura * (i - 1));
+					}
+				}
 }
 void AfisareMutari(int linia, int coloana) //Sageti care indica unde se poate efectua mutarea
 {
-	int x1, y1, x2, y2;
+	int x1, y1, x2, y2, a, b;
 	int xmijloc, ymijloc;
 	int x, y;
 	setcolor(RED);
@@ -52,73 +139,58 @@ void AfisareMutari(int linia, int coloana) //Sageti care indica unde se poate ef
 	xmijloc = (x1 + x2) / 2;
 	ymijloc = (y1 + y2) / 2;
 	setlinestyle(SOLID_LINE, 2, 8); //void setlinestyle(int linestyle, unsigned upattern, int thickness);
+	a = linia;
+	b = coloana;
 	if (TablaDeJoc[linia][coloana] == 1)
-		if (linia != 1)
-			if (coloana == 1)
-			{
-				if (TablaDeJoc[linia - 1][coloana + 1] != 1 && TablaDeJoc[linia - 1][coloana + 1] != 2)
-					line(xmijloc, ymijloc, xmijloc + 50, ymijloc - 50); //void line(int x1, int y1, int x2, int y2);
-			}
-			else if (coloana == 8)
-			{
-				if (TablaDeJoc[linia - 1][coloana - 1] != 1 && TablaDeJoc[linia - 1][coloana - 1] != 2)
-					line(xmijloc, ymijloc, xmijloc - 50, ymijloc - 50);
-			}
-			else
-			{
-				if (TablaDeJoc[linia - 1][coloana - 1] != 1 && TablaDeJoc[linia - 1][coloana - 1] != 2)
-					line(xmijloc, ymijloc, xmijloc - 50, ymijloc - 50);
-				if (TablaDeJoc[linia - 1][coloana + 1] != 1 && TablaDeJoc[linia - 1][coloana + 1] != 2)
-					line(xmijloc, ymijloc, xmijloc + 50, ymijloc - 50);
-			}
+
+		if (a - 1 >= 1 && b - 1 >= 1 && TablaDeJoc[a - 1][b - 1] == 0)
+			line(xmijloc, ymijloc, xmijloc - 50, ymijloc - 50);
+	if (a - 1 >= 1 && b + 1 <= 8 && TablaDeJoc[a - 1][b + 1] == 0)
+		line(xmijloc, ymijloc, xmijloc + 50, ymijloc - 50);
+
 	if (TablaDeJoc[linia][coloana] == 2)
 	{
-		int a, b;
-		a = linia;
-		b = coloana;
+
 		if (a - 1 >= 1 && b - 1 >= 1 && TablaDeJoc[a - 1][b - 1] == 0)
-            line(xmijloc, ymijloc, xmijloc - 50, ymijloc - 50);
+			line(xmijloc, ymijloc, xmijloc - 50, ymijloc - 50);
 		if (a - 1 >= 1 && b + 1 <= 8 && TablaDeJoc[a - 1][b + 1] == 0)
-            line(xmijloc, ymijloc, xmijloc + 50, ymijloc - 50);
+			line(xmijloc, ymijloc, xmijloc + 50, ymijloc - 50);
 		if (a + 1 <= 8 && b - 1 >= 1 && TablaDeJoc[a + 1][b - 1] == 0)
-            line(xmijloc, ymijloc, xmijloc - 50, ymijloc + 50);
+			line(xmijloc, ymijloc, xmijloc - 50, ymijloc + 50);
 		if (a + 1 <= 8 && b + 1 <= 8 && TablaDeJoc[a + 1][b + 1] == 0)
-            line(xmijloc, ymijloc, xmijloc + 50, ymijloc + 50);
+			line(xmijloc, ymijloc, xmijloc + 50, ymijloc + 50);
 	}
 	DisplayCharacters();
 }
 void meniu()
 {
-    clearviewport();
 	char sir[30];
-	bar(290, 80, 510, 155);         // void bar (int left, int top, int right, int bottom);
-	strcpy(sir, "MENIU");
-	setcolor(RED);
-	settextstyle(8, HORIZ_DIR, 18); // void settextstyle (int font, int direction, int charsize);
-	outtextxy(300, 85, sir);       //void outtextxy (int x, int y, char *textstring);
-	settextstyle(9, HORIZ_DIR, 13);
-	strcpy(sir, "CALCULATOR VS JUCATOR");
-	outtextxy(200, 185, sir);
-	strcpy(sir, "JUCATOR VS JUCATOR");
-	outtextxy(230, 255, sir);
-	strcpy(sir, "SKINS");
-	outtextxy(358, 325, sir);
-	strcpy(sir, "CUM TE JOCI?");
-	outtextxy(300, 395, sir);
-	strcpy(sir, "SETARI");
-	outtextxy(350, 465, sir);
+
+	readimagefile("background.jpg", 0, 0, 900, 600);
+
+
+
+	for (int i = 1; i <= 8; i++)
+		for (int j = 1; j <= 8; j++)
+			TablaDeJoc[i][j] = 0;
+	TablaDeJoc[8][1] = 1;
+	TablaDeJoc[8][3] = 1;
+	TablaDeJoc[8][5] = 1;
+	TablaDeJoc[8][7] = 1;
+	TablaDeJoc[1][4] = 2;
 }
 void Tabla()
 {
 	int i, j, x, a, b, c, d;
 	numar = 8;
-	width = 560;
-	height = 560;
+	width = 480;
+	height = 480;
 	latura = width / numar; //latura = 70;
 	sus = (getmaxy() - width) / 2; //sus = 19;
 	stanga = (getmaxx() - height) / 2; //stanga = 119;
 	setbkcolor(RED);                  //void setbkcolor(int color);
 	clearviewport();
+
 	setcolor(0);                    //void setcolor (int color); 0 = BLACK;
 	for (i = 1; i <= numar; i++)
 	{
@@ -153,8 +225,8 @@ void PunerePiese()
 	int xmijloc, ymijloc;
 	int linia, coloana, x = 0, y;
 	numar = 8;
-	width = 560;
-	height = 560;
+	width = 480;
+	height = 480;
 	latura = width / numar;
 	sus = (getmaxy() - width) / 2; //19;
 	stanga = (getmaxx() - height) / 2; //119;
@@ -197,18 +269,22 @@ bool CainiAuCastigat()
 	if (nr == 0)
 		return true;
 	else
-        return false;
+		return false;
 }
 bool VulpeaACastigat()
 {
-	int a, b, i, j;
+	int a, b, i, j, ok = 0;
 	for (i = 1; i <= 8; i++)
 		for (j = 1; j <= 8; j++)
 			if (TablaDeJoc[i][j] == 2) { a = i; b = j; }
-	if (a == 8)
+			else if (TablaDeJoc[i][j] == 1)if ((i - 1 >= 1 && j - 1 >= 1 && TablaDeJoc[i - 1][j - 1] == 0) || (i - 1 >= 1 && j + 1 <= 8 && TablaDeJoc[i - 1][j + 1] == 0))ok = 1;
+	if (a == 8 || ok == 0)
+	{
+		VulpeaCastiga();
 		return true;
-	else if (TablaDeJoc[1][2] == 1 && TablaDeJoc[1][4] == 1 && TablaDeJoc[1][6] == 1 && TablaDeJoc[1][8] == 1)
-		return true;
+	}
+
+
 	else
 		return false;
 }
@@ -218,9 +294,13 @@ void JucatorVsJucator()
 	int xmijloc, ymijloc;
 	int linia, coloana, x, y, linia1, coloana1;
 	int nr = 0, ok, gata = 1;
+
+
 	Tabla();
+	Backtomenu();
 	while (gata)
 	{
+		RandulCainilor();
 		while (nr % 2 == 0)
 		{
 			if (ismouseclick(WM_LBUTTONDOWN))
@@ -231,42 +311,51 @@ void JucatorVsJucator()
 				y = mousey();
 				linia = (y - sus) / latura + 1;
 				coloana = (x - stanga) / latura + 1;
-				if (TablaDeJoc[linia][coloana] == 1)
+				if (x >= 752 && x <= 821 && y >= 564 && y <= 581)
 				{
-					AfisareMutari(linia, coloana);
-					while (ok == 1)
-						if (ismouseclick(WM_LBUTTONDOWN))
-						{
-							clearmouseclick(WM_LBUTTONDOWN);
-							x = mousex();
-							y = mousey();
-							linia1 = (y - sus) / latura + 1;
-							coloana1 = (x - stanga) / latura + 1;
-							if (((coloana1 == coloana + 1 && linia1 == linia - 1) || (coloana1 == coloana - 1 && linia1 == linia - 1)) && TablaDeJoc[linia1][coloana1] == 0)
-							{
-								TablaDeJoc[linia][coloana] = 0;
-								TablaDeJoc[linia1][coloana1] = 1;
-								nr++;
-							}
-							ok = 0;
-						}
-					PunerePiese();
+					gata = 0;
+					cleardevice();
+					meniu();
+					nr++;
 				}
+				else
+					if (TablaDeJoc[linia][coloana] == 1)
+					{
+						AfisareMutari(linia, coloana);
+						while (ok == 1)
+							if (ismouseclick(WM_LBUTTONDOWN))
+							{
+								clearmouseclick(WM_LBUTTONDOWN);
+								x = mousex();
+								y = mousey();
+								linia1 = (y - sus) / latura + 1;
+								coloana1 = (x - stanga) / latura + 1;
+								if (((coloana1 == coloana + 1 && linia1 == linia - 1) || (coloana1 == coloana - 1 && linia1 == linia - 1)) && TablaDeJoc[linia1][coloana1] == 0)
+								{
+									TablaDeJoc[linia][coloana] = 0;
+									TablaDeJoc[linia1][coloana1] = 1;
+									nr++;
+								}
+								ok = 0;
+							}
+						PunerePiese();
+					}
 			}
 		}
 		if (CainiAuCastigat())
-            {
-                gata = 0;
-                cout << "Cainii au castigat!";
-            }
-		else
+		{
+			gata = 0;
+			cout << "Cainii au castigat!";
+		}
+		else if (gata != 0)
 			if (VulpeaACastigat())
-            {
-                gata = 0;
-                cout << "Vulpea a castigat!";
-            }
+			{
+				gata = 0;
+
+			}
 			else
 			{
+				RandulVulpei();
 				ok = 1;
 				while (nr % 2 == 1)
 					if (ismouseclick(WM_LBUTTONDOWN))
@@ -276,40 +365,851 @@ void JucatorVsJucator()
 						y = mousey();
 						linia = (y - sus) / latura + 1;
 						coloana = (x - stanga) / latura + 1;
-						if (TablaDeJoc[linia][coloana] == 2)
+						if (x >= 752 && x <= 821 && y >= 564 && y <= 581)
 						{
-							AfisareMutari(linia, coloana);
-							while (ok == 1)
-								if (ismouseclick(WM_LBUTTONDOWN))
-								{
-									clearmouseclick(WM_LBUTTONDOWN);
-									x = mousex();
-									y = mousey();
-									linia1 = (y - sus) / latura + 1;
-									coloana1 = (x - stanga) / latura + 1;
-									if (((coloana1 == coloana + 1 && linia1 == linia + 1) || (coloana1 == coloana + 1 && linia1 == linia - 1) || (coloana1 == coloana - 1 && linia1 == linia + 1) || (coloana1 == coloana - 1 && linia1 == linia - 1)) && TablaDeJoc[linia1][coloana1] == 0)
-									{
-										TablaDeJoc[linia][coloana] = 0;
-										TablaDeJoc[linia1][coloana1] = 2;
-										nr++;
-										ok = 0;
-									}
-								}
-							PunerePiese();
+							gata = 0;
+							cleardevice();
+							meniu();
+							nr++;
 						}
+						else
+							if (TablaDeJoc[linia][coloana] == 2)
+							{
+								AfisareMutari(linia, coloana);
+								while (ok == 1)
+									if (ismouseclick(WM_LBUTTONDOWN))
+									{
+										clearmouseclick(WM_LBUTTONDOWN);
+										x = mousex();
+										y = mousey();
+										linia1 = (y - sus) / latura + 1;
+										coloana1 = (x - stanga) / latura + 1;
+										if (((coloana1 == coloana + 1 && linia1 == linia + 1) || (coloana1 == coloana + 1 && linia1 == linia - 1) || (coloana1 == coloana - 1 && linia1 == linia + 1) || (coloana1 == coloana - 1 && linia1 == linia - 1)) && TablaDeJoc[linia1][coloana1] == 0)
+										{
+											TablaDeJoc[linia][coloana] = 0;
+											TablaDeJoc[linia1][coloana1] = 2;
+											nr++;
+											ok = 0;
+										}
+									}
+								PunerePiese();
+							}
 					}
 				if (VulpeaACastigat())
 				{
 					gata = 0;
-					cout << "Vulpea a castigat";
+
 				}
 			}
 	}
+
+}
+/*JUCATOR VS CALCULATOR*/
+void InitializareCalVSJuc()
+{
+	int a, b, OK = 1;
+	setbkcolor(BROWN);
+	readimagefile("bck2.jpg", 0, 0, 900, 600);
+	if (skinVulpe == 1) {
+		readimagefile("Fox1.gif", 150, 240, 270, 360);
+	}
+	if (skinVulpe == 2) {
+		readimagefile("Fox2.gif", 150, 240, 270, 360);
+	}
+	if (skinVulpe == 3) {
+		readimagefile("Fox3.gif", 150, 240, 270, 360);
+	}
+	if (skinCaine == 4) {
+		readimagefile("Dog4.gif", 630, 240, 750, 360);
+	}
+	if (skinCaine == 5) {
+		readimagefile("Dog5.gif", 630, 240, 750, 360);
+	}
+	if (skinCaine == 6) {
+		readimagefile("Dog6.gif", 630, 240, 750, 360);
+	}
+
+	Backtomenu();
+
 }
 
-void DisplaySkinsWindow(){
+void InitializareDificultate()
+{
+	setbkcolor(0);
+	cleardevice();
+	Backtodificultate();
+	char sir[30];
 
-    setbkcolor(BLACK);
+	strcpy(sir, "Alege dificultatea");
+	setcolor(RED);
+	settextstyle(8, HORIZ_DIR, 16);
+	outtextxy(250, 85, sir);
+	settextstyle(9, HORIZ_DIR, 13);
+	setcolor(WHITE);
+	strcpy(sir, "USOR");
+	outtextxy(300, 185, sir);
+	setcolor(YELLOW);
+	strcpy(sir, "GREU");
+	outtextxy(300, 235, sir);
+}
+void CaineUsor()
+{
+	int x1, y1, x2, y2;
+	int xmijloc, ymijloc;
+	int linia, coloana, x, y, linia1, coloana1;
+	int nr = 0, ok, gata = 1;
+	for (int i = 1; i <= 8; i++)
+		for (int j = 1; j <= 8; j++)
+			TablaDeJoc[i][j] == 0;
+	TablaDeJoc[8][1] = 1;
+	TablaDeJoc[8][3] = 1;
+	TablaDeJoc[8][5] = 1;
+	TablaDeJoc[8][7] = 1;
+	TablaDeJoc[1][4] = 2;
+	Tabla();
+	Backtomenu();
+	undo();
+	while (gata)
+	{
+		RandulCainilor();
+		while (nr % 2 == 0)
+		{
+			if (ismouseclick(WM_LBUTTONDOWN))
+			{
+				ok = 1;
+				clearmouseclick(WM_LBUTTONDOWN);
+				x = mousex();
+				y = mousey();
+				linia = (y - sus) / latura + 1;
+				coloana = (x - stanga) / latura + 1;
+				if (x >= 752 && x <= 821 && y >= 564 && y <= 581)
+				{
+					cleardevice();
+					meniu();
+					gata = 0;
+					nr++;
+				}
+				if (x >= 752 && x <= 821 && y >= 514 && y <= 531)
+				{
+					inapoi();
+					PunerePiese();
+				}
+				else
+					if (TablaDeJoc[linia][coloana] == 1)
+					{
+						AfisareMutari(linia, coloana);
+						while (ok == 1)
+							if (ismouseclick(WM_LBUTTONDOWN))
+							{
+								clearmouseclick(WM_LBUTTONDOWN);
+								x = mousex();
+								y = mousey();
+								linia1 = (y - sus) / latura + 1;
+								coloana1 = (x - stanga) / latura + 1;
+								if (((coloana1 == coloana + 1 && linia1 == linia - 1) || (coloana1 == coloana - 1 && linia1 == linia - 1)) && TablaDeJoc[linia1][coloana1] == 0)
+								{
+									TablaDeJoc[linia][coloana] = 0;
+									TablaDeJoc[linia1][coloana1] = 1;
+									nr++;
+									cx1 = linia;
+									cy1 = coloana;
+									cx2 = linia1;
+									cy2 = coloana1;
+									Beep(3003, 300);
+								}
+								ok = 0;
+							}
+						PunerePiese();
+					}
+			}
+		}
+		if (CainiAuCastigat())
+		{
+			gata = 0;
+			cout << "Cainii au castigat!";
+		}
+		else
+			if (VulpeaACastigat())
+			{
+				gata = 0;
+				cout << "Vulpea a castigat!";
+			}
+			else if (gata != 0)
+			{
+
+				RandulVulpei();
+				delay(500);
+				//cautam pozitia vulpei
+				int i, j;
+				for (i = 1; i <= 8; i++)
+					for (j = 1; j <= 8; j++)
+						if (TablaDeJoc[i][j] == 2)
+						{
+							linia = i;
+							coloana = j;
+						}
+				cout << "linia=" << linia << " coloana " << coloana << endl;
+				ok = 0;
+				while (ok == 0)
+				{
+					int random;
+					random = rand() % 4;
+					cout << random << " ";
+					if (random == 0)
+					{
+
+						if (linia - 1 >= 1 && coloana - 1 >= 1 && TablaDeJoc[linia - 1][coloana - 1] == 0)
+						{
+							TablaDeJoc[linia][coloana] = 0;
+							TablaDeJoc[linia - 1][coloana - 1] = 2;
+							ok = 1;
+							vx1 = linia;
+							vy1 = coloana;
+							vx2 = linia - 1;
+							vy2 = coloana - 1;
+
+						}
+					}
+					else if (random == 1)
+					{
+
+						if (linia - 1 >= 1 && coloana + 1 <= 8 && TablaDeJoc[linia - 1][coloana + 1] == 0)
+						{
+							TablaDeJoc[linia][coloana] = 0;
+							TablaDeJoc[linia - 1][coloana + 1] = 2;
+							ok = 1;
+							vx1 = linia;
+							vy1 = coloana;
+							vx2 = linia - 1;
+							vy2 = coloana + 1;
+
+						}
+					}
+					else if (random == 2)
+					{
+
+						if (linia + 1 <= 8 && coloana - 1 >= 1 && TablaDeJoc[linia + 1][coloana - 1] == 0)
+						{
+							TablaDeJoc[linia + 1][coloana - 1] = 2;
+							TablaDeJoc[linia][coloana] = 0;
+							ok = 1;
+							vx1 = linia;
+							vy1 = coloana;
+							vx2 = linia + 1;
+							vy2 = coloana - 1;
+						}
+					}
+					else
+
+						if (linia + 1 <= 8 && coloana + 1 <= 8 && TablaDeJoc[linia + 1][coloana + 1] == 0)
+						{
+							TablaDeJoc[linia][coloana] = 0;
+							TablaDeJoc[linia + 1][coloana + 1] = 2;
+							ok = 1;
+							vx1 = linia;
+							vy1 = coloana;
+							vx2 = linia + 1;
+							vy2 = coloana + 1;
+						}
+
+				}
+				Beep(923, 300);
+				nr++;
+				PunerePiese();
+
+			}
+
+		if (VulpeaACastigat())
+		{
+			gata = 0;
+			cout << "Vulpea a castigat";
+		}
+	}
+}
+void CaineGreu()
+{
+	int x1, y1, x2, y2;
+	int xmijloc, ymijloc;
+	int linia, coloana, x, y, linia1, coloana1;
+	int nr = 0, ok, gata = 1, random;
+	for (int i = 1; i <= 8; i++)
+		for (int j = 1; j <= 8; j++)
+			TablaDeJoc[i][j] == 0;
+	TablaDeJoc[8][1] = 1;
+	TablaDeJoc[8][3] = 1;
+	TablaDeJoc[8][5] = 1;
+	TablaDeJoc[8][7] = 1;
+	TablaDeJoc[1][4] = 2;
+	Tabla();
+	Backtomenu();
+	undo();
+	while (gata)
+	{
+		RandulCainilor();
+		while (nr % 2 == 0)
+		{
+			if (ismouseclick(WM_LBUTTONDOWN))
+			{
+				ok = 1;
+				clearmouseclick(WM_LBUTTONDOWN);
+				x = mousex();
+				y = mousey();
+				linia = (y - sus) / latura + 1;
+				coloana = (x - stanga) / latura + 1;
+				if (x >= 752 && x <= 821 && y >= 564 && y <= 581)
+				{
+					cleardevice();
+					meniu();
+					gata = 0;
+					nr++;
+				}
+				else if (x >= 752 && x <= 821 && y >= 514 && y <= 531)
+				{
+					inapoi();
+					PunerePiese();
+				}
+				else
+					if (TablaDeJoc[linia][coloana] == 1)
+					{
+						AfisareMutari(linia, coloana);
+						while (ok == 1)
+							if (ismouseclick(WM_LBUTTONDOWN))
+							{
+								clearmouseclick(WM_LBUTTONDOWN);
+								x = mousex();
+								y = mousey();
+								linia1 = (y - sus) / latura + 1;
+								coloana1 = (x - stanga) / latura + 1;
+								if (((coloana1 == coloana + 1 && linia1 == linia - 1) || (coloana1 == coloana - 1 && linia1 == linia - 1)) && TablaDeJoc[linia1][coloana1] == 0)
+								{
+									TablaDeJoc[linia][coloana] = 0;
+									TablaDeJoc[linia1][coloana1] = 1;
+									nr++;
+									cx1 = linia;
+									cy1 = coloana;
+									cx2 = linia1;
+									cy2 = coloana1;
+								}
+								ok = 0;
+							}
+						PunerePiese();
+					}
+			}
+		}
+		if (CainiAuCastigat())
+		{
+			gata = 0;
+			cout << "Cainii au castigat!";
+		}
+		else
+			if (VulpeaACastigat())
+			{
+				gata = 0;
+				cout << "Vulpea a castigat!";
+			}
+			else if (gata != 0)
+			{
+
+				RandulVulpei();
+				delay(500);
+				//cautam pozitia vulpei
+				int i, j;
+				for (i = 1; i <= 8; i++)
+					for (j = 1; j <= 8; j++)
+						if (TablaDeJoc[i][j] == 2)
+						{
+							linia = i;
+							coloana = j;
+						}
+
+				ok = 0;
+				while (ok == 0)
+				{
+					if ((linia + 1 <= 8 && coloana - 1 >= 1 && TablaDeJoc[linia + 1][coloana - 1] == 0) || (linia + 1 >= 1 && coloana + 1 >= 1 && TablaDeJoc[linia + 1][coloana + 1] == 0))
+					{
+						random = rand() % 2;
+
+						if (random == 0)
+						{
+
+							if (linia + 1 <= 8 && coloana + 1 <= 8 && TablaDeJoc[linia + 1][coloana + 1] == 0)
+							{
+								TablaDeJoc[linia][coloana] = 0;
+								TablaDeJoc[linia + 1][coloana + 1] = 2;
+								ok = 1;
+								vx1 = linia;
+								vy1 = coloana;
+								vx2 = linia + 1;
+								vy2 = coloana + 1;
+
+
+							}
+						}
+						else if (random == 1)
+						{
+
+							if (linia + 1 <= 8 && coloana - 1 >= 1 && TablaDeJoc[linia + 1][coloana - 1] == 0)
+							{
+								TablaDeJoc[linia][coloana] = 0;
+								TablaDeJoc[linia + 1][coloana - 1] = 2;
+								ok = 1;
+								vx1 = linia;
+								vy1 = coloana;
+								vx2 = linia + 1;
+								vy2 = coloana - 1;
+
+
+							}
+						}
+					}
+					else
+					{
+						random = rand() % 2;
+						if (random == 0)
+						{
+							if (linia - 1 >= 1 && coloana - 1 >= 1 && TablaDeJoc[linia - 1][coloana - 1] == 0)
+							{
+								TablaDeJoc[linia - 1][coloana - 1] = 2;
+								TablaDeJoc[linia][coloana] = 0;
+								ok = 1;
+								vx1 = linia;
+								vy1 = coloana;
+								vx2 = linia - 1;
+								vy2 = coloana - 1;
+
+							}
+						}
+						else
+
+							if (linia - 1 >= 1 && coloana + 1 <= 8 && TablaDeJoc[linia - 1][coloana + 1] == 0)
+							{
+								TablaDeJoc[linia][coloana] = 0;
+								TablaDeJoc[linia - 1][coloana + 1] = 2;
+								ok = 1;
+								vx1 = linia;
+								vy1 = coloana;
+								vx2 = linia - 1;
+								vy2 = coloana + 1;
+
+							}
+					}
+
+				}
+				nr++;
+				PunerePiese();
+
+			}
+
+		if (VulpeaACastigat())
+		{
+			gata = 0;
+			cout << "Vulpea a castigat";
+		}
+	}
+
+}
+void VulpeUsor()
+{
+	int x1, y1, x2, y2, a, b;
+	int xmijloc, ymijloc;
+	int linia, coloana, x, y, linia1, coloana1;
+	int nr = 0, ok, gata = 1;
+	Tabla();
+	Backtomenu();
+	undo();
+	while (gata)
+	{
+		RandulCainilor();
+		ok = 0;
+		while (ok == 0)
+		{
+			int i, j, random;
+			random = rand() % 10;
+
+
+			linia = 0;
+			for (i = 1; i <= 8; i++)if (TablaDeJoc[i][random] == 1) linia = i;
+			if (linia != 0)
+			{
+				int ran;
+				a = linia;
+				b = random;
+				ran = rand() % 2;
+				cout << ran << " " << random << "  " << linia << endl;
+				if (ran == 0)
+					if (a - 1 >= 1 && b - 1 >= 1 && TablaDeJoc[a - 1][b - 1] == 0)
+					{
+						TablaDeJoc[linia][random] = 0;
+						TablaDeJoc[linia - 1][random - 1] = 1;
+						nr++;
+						ok = 1;
+						cx1 = linia;
+						cy1 = random;
+						cx2 = linia - 1;
+						cy2 = random - 1;
+					}
+					else cout << " ";
+				else if (a - 1 >= 1 && b + 1 <= 8 && TablaDeJoc[a - 1][b + 1] == 0)
+				{
+					TablaDeJoc[linia][random] = 0;
+					TablaDeJoc[linia - 1][random + 1] = 1;
+					nr++;
+					ok = 1;
+					cx1 = linia;
+					cy1 = random;
+					cx2 = linia - 1;
+					cy2 = random + 1;
+				}
+			}
+
+
+
+		}
+
+
+
+
+		PunerePiese();
+
+
+		if (CainiAuCastigat())
+		{
+			gata = 0;
+			cout << "Cainii au castigat!";
+		}
+		else
+			if (VulpeaACastigat())
+			{
+				gata = 0;
+				VulpeaCastiga();
+			}
+			else
+			{
+				RandulVulpei();
+				ok = 1;
+				while (nr % 2 == 1)
+					if (ismouseclick(WM_LBUTTONDOWN))
+					{
+						clearmouseclick(WM_LBUTTONDOWN);
+						x = mousex();
+						y = mousey();
+						linia = (y - sus) / latura + 1;
+						coloana = (x - stanga) / latura + 1;
+						if (x >= 752 && x <= 821 && y >= 564 && y <= 581)
+						{
+							cleardevice();
+							meniu();
+							gata = 0;
+							nr++;
+						}
+						else if (x >= 752 && x <= 821 && y >= 514 && y <= 531)
+						{
+							inapoi();
+							PunerePiese();
+						}
+						else
+							if (TablaDeJoc[linia][coloana] == 2)
+							{
+								AfisareMutari(linia, coloana);
+								while (ok == 1)
+									if (ismouseclick(WM_LBUTTONDOWN))
+									{
+										clearmouseclick(WM_LBUTTONDOWN);
+										x = mousex();
+										y = mousey();
+										linia1 = (y - sus) / latura + 1;
+										coloana1 = (x - stanga) / latura + 1;
+										if (((coloana1 == coloana + 1 && linia1 == linia + 1) || (coloana1 == coloana + 1 && linia1 == linia - 1) || (coloana1 == coloana - 1 && linia1 == linia + 1) || (coloana1 == coloana - 1 && linia1 == linia - 1)) && TablaDeJoc[linia1][coloana1] == 0)
+										{
+											TablaDeJoc[linia][coloana] = 0;
+											TablaDeJoc[linia1][coloana1] = 2;
+											nr++;
+											ok = 0;
+											vx1 = linia;
+											vy1 = coloana;
+											vx2 = linia1;
+											vy2 = coloana1;
+
+										}
+									}
+								PunerePiese();
+							}
+
+						if (VulpeaACastigat())
+						{
+							gata = 0;
+							VulpeaCastiga();
+						}
+					}
+			}
+
+	}
+}
+void VulpeGreu()
+{
+	int x1, y1, x2, y2, a, b;
+	int xmijloc, ymijloc;
+	int linia, coloana, x, y, linia1, coloana1;
+	int nr = 0, ok, gata = 1, k = 8, nrC = 4, s;
+	Tabla();
+	Backtomenu();
+	undo();
+	while (gata)
+	{
+		RandulCainilor();
+		int i, j, nrCaini = 0;
+		s = 0;
+		for (i = 1; i <= 8; i++)
+			if (TablaDeJoc[k][i] == 1)nrCaini++;
+		nrC = 4;
+		if (k % 2 == 0)
+		{
+			for (i = 1; i <= 8; i++)
+				if (TablaDeJoc[k][i] == 1)
+				{
+
+					if (TablaDeJoc[k - 1][i + 1] == 0)
+					{
+						TablaDeJoc[k][i] = 0;
+						TablaDeJoc[k - 1][i + 1] = 1;
+						nrC--;
+						cx1 = k;
+						cy1 = i;
+						cx2 = k - 1;
+						cy2 = i + 1;
+						if (nrC == 0) { k--; nrC = 4; }
+						nr++;
+						cout << "k= " << k;
+						i = 10;
+					}
+				}
+				else if (i % 2 == 1) { nrC--; if (nrC == 0)k--; }
+		}
+
+
+		else
+
+			for (i = 1; i <= 8; i++)
+				if (TablaDeJoc[k][i] == 1)
+				{
+					if (TablaDeJoc[k - 1][i - 1] == 0)
+					{
+						TablaDeJoc[k][i] = 0;
+						TablaDeJoc[k - 1][i - 1] = 1;
+						nrC--;
+						cx1 = k;
+						cy1 = i;
+						cx2 = k - 1;
+						cy2 = i - 1;
+						if (nrC == 0)
+						{
+							k--;
+							nrC = 4;
+						}
+						nr++;
+
+
+						i = 10;
+					}
+					else if (i == 8) {
+						TablaDeJoc[k - 1][1] = 0;
+						TablaDeJoc[k - 2][2] = 1;
+						cx1 = k - 1;
+						cy1 = 1;
+						cx2 = k - 2;
+						cy2 = 2;
+
+						nr++;
+					}
+				}
+
+				else if (i % 2 == 0)
+				{
+					nrC--;
+					if (nrC == 0)
+						k--;
+				}
+
+
+
+		PunerePiese();
+
+		if (CainiAuCastigat())
+		{
+			gata = 0;
+			cout << "Cainii au castigat!";
+		}
+		else
+			if (VulpeaACastigat())
+			{
+				gata = 0;
+				VulpeaCastiga();
+			}
+			else
+			{
+				RandulVulpei();
+				ok = 1;
+				while (nr % 2 == 1)
+					if (ismouseclick(WM_LBUTTONDOWN))
+					{
+						clearmouseclick(WM_LBUTTONDOWN);
+						x = mousex();
+						y = mousey();
+						linia = (y - sus) / latura + 1;
+						coloana = (x - stanga) / latura + 1;
+						if (x >= 752 && x <= 821 && y >= 564 && y <= 581)
+						{
+							cleardevice();
+							meniu();
+							gata = 0;
+							nr++;
+						}
+						else if (x >= 752 && x <= 821 && y >= 514 && y <= 531)
+						{
+							inapoi();
+							PunerePiese();
+							nrC++;
+						}
+						else
+							if (TablaDeJoc[linia][coloana] == 2)
+							{
+								AfisareMutari(linia, coloana);
+								while (ok == 1)
+									if (ismouseclick(WM_LBUTTONDOWN))
+									{
+										clearmouseclick(WM_LBUTTONDOWN);
+										x = mousex();
+										y = mousey();
+										linia1 = (y - sus) / latura + 1;
+										coloana1 = (x - stanga) / latura + 1;
+										if (((coloana1 == coloana + 1 && linia1 == linia + 1) || (coloana1 == coloana + 1 && linia1 == linia - 1) || (coloana1 == coloana - 1 && linia1 == linia + 1) || (coloana1 == coloana - 1 && linia1 == linia - 1)) && TablaDeJoc[linia1][coloana1] == 0)
+										{
+											TablaDeJoc[linia][coloana] = 0;
+											TablaDeJoc[linia1][coloana1] = 2;
+											nr++;
+											ok = 0;
+											vx1 = linia;
+											vy1 = coloana;
+											vx2 = linia1;
+											vy2 = coloana1;
+
+										}
+									}
+								PunerePiese();
+							}
+
+						if (VulpeaACastigat())
+						{
+							gata = 0;
+							VulpeaCastiga();
+						}
+					}
+			}
+	}
+}
+void CalculatorVsJucator()
+{
+	int a, b, OK = 1, ok = 1;
+
+	InitializareCalVSJuc();
+	do
+	{
+		if (ismouseclick(WM_LBUTTONDOWN))
+		{
+			clearmouseclick(WM_LBUTTONDOWN);
+			a = mousex();
+			b = mousey();
+
+			if (a >= 752 && a <= 821 && b >= 564 && b <= 581)
+			{
+				cleardevice();
+				meniu();
+				OK = 0;
+			}
+			else
+				if ((a > 6 && a < 758 && b> 234 && b < 354) && OK == 1)//CAINE
+				{
+					InitializareDificultate();
+					do
+					{
+						if (ismouseclick(WM_LBUTTONDOWN))
+						{
+							clearmouseclick(WM_LBUTTONDOWN);
+							a = mousex();
+							b = mousey();
+							if (a >= 752 && a <= 821 && b >= 564 && b <= 581)
+							{
+								cleardevice();
+								CalculatorVsJucator();
+								ok = 0;
+								OK = 0;
+							}
+							if (a > 300 && a < 368 && b>187 && b < 205)//CAINE USOR
+							{
+
+								CaineUsor();
+								ok = 0;
+								OK = 0;
+							}
+							if (a > 300 && a < 368 && b>235 && b < 253)
+							{
+								CaineGreu();
+								ok = 0;
+								OK = 0;
+							}
+						}
+					} while (ok);
+				}
+				else
+					if (a > 149 && a < 264 && b>247 && b < 353)//VULPE
+					{
+						InitializareDificultate();
+
+						do
+						{
+							if (ismouseclick(WM_LBUTTONDOWN))
+							{
+								clearmouseclick(WM_LBUTTONDOWN);
+								a = mousex();
+								b = mousey();
+								if (a >= 752 && a <= 821 && b >= 564 && b <= 581)
+								{
+									cleardevice();
+									CalculatorVsJucator();
+									ok = 0;
+									OK = 0;
+								}
+								else
+									if (a > 300 && a < 368 && b>187 && b < 205)//CAINE USOR
+									{
+
+										VulpeUsor();
+										ok = 0;
+										OK = 0;
+
+									}
+									else if (a > 300 && a < 368 && b>235 && b < 253)
+									{
+
+										VulpeGreu();
+										ok = 0;
+										OK = 0;
+									}
+								cout << "vulpegreu gata";
+							}
+						} while (ok);
+					}
+			cout << "GATA";
+		}
+
+	} while (OK);
+
+
+
+}
+void DisplaySkinsWindow() {
+
+	setbkcolor(BLACK);
 	clearviewport();
 	char sir[30];
 	setcolor(WHITE);
@@ -322,43 +1222,50 @@ void DisplaySkinsWindow(){
 	settextstyle(9, HORIZ_DIR, 14);
 	outtextxy(360, 450, sir);
 
-    if(skinVulpe == 1){
-        readimagefile("Fox1.gif", 40, 240, 160, 360);
-    } else {
-        readimagefile("Fox1.gif", 60, 260, 140, 340);
-    }
-    if(skinVulpe == 2){
-        readimagefile("Fox2.gif", 150, 240, 270, 360);
-    } else {
-        readimagefile("Fox2.gif", 170, 260, 250, 340);
-    }
-    if(skinVulpe == 3){
-        readimagefile("Fox3.gif", 260, 240, 380, 360);
-    } else {
-        readimagefile("Fox3.gif", 280, 260, 360, 340);
-    }
+	if (skinVulpe == 1) {
+		readimagefile("Fox1.gif", 40, 240, 160, 360);
+	}
+	else {
+		readimagefile("Fox1.gif", 60, 260, 140, 340);
+	}
+	if (skinVulpe == 2) {
+		readimagefile("Fox2.gif", 150, 240, 270, 360);
+	}
+	else {
+		readimagefile("Fox2.gif", 170, 260, 250, 340);
+	}
+	if (skinVulpe == 3) {
+		readimagefile("Fox3.gif", 260, 240, 380, 360);
+	}
+	else {
+		readimagefile("Fox3.gif", 280, 260, 360, 340);
+	}
 
-    if(skinCaine == 4){
-        readimagefile("Dog4.gif", 420, 240, 540, 360);
-    } else {
-        readimagefile("Dog4.gif", 440, 260, 520, 340);
-    }
-    if(skinCaine == 5){
-        readimagefile("Dog5.gif", 530, 240, 650, 360);
-    } else {
-        readimagefile("Dog5.gif", 550, 260, 630, 340);
-    }
-    if(skinCaine == 6){
-        readimagefile("Dog6.gif", 640, 240, 760, 360);
-    } else {
-        readimagefile("Dog6.gif", 660, 260, 740, 340);
-    }
+	if (skinCaine == 4) {
+		readimagefile("Dog4.gif", 420, 240, 540, 360);
+	}
+	else {
+		readimagefile("Dog4.gif", 440, 260, 520, 340);
+	}
+	if (skinCaine == 5) {
+		readimagefile("Dog5.gif", 530, 240, 650, 360);
+	}
+	else {
+		readimagefile("Dog5.gif", 550, 260, 630, 340);
+	}
+	if (skinCaine == 6) {
+		readimagefile("Dog6.gif", 640, 240, 760, 360);
+	}
+	else {
+		readimagefile("Dog6.gif", 660, 260, 740, 340);
+	}
 }
+//SKINS WINDOW
+void SkinsWindow()
+{
+	DisplaySkinsWindow();
 
-void SkinsWindow(){
-    DisplaySkinsWindow();
-
-    int a, b;
+	int a, b;
 	do
 	{
 		if (ismouseclick(WM_LBUTTONDOWN))
@@ -366,33 +1273,33 @@ void SkinsWindow(){
 			clearmouseclick(WM_LBUTTONDOWN);
 			a = mousex();
 			b = mousey();
-			if (a > 62 && a < 141 && b>264 && b < 336 && skinVulpe != 1){ // click pe primul skin
-                skinVulpe = 1;
-                DisplaySkinsWindow();
+			if (a > 62 && a < 141 && b>264 && b < 336 && skinVulpe != 1) { // click pe primul skin
+				skinVulpe = 1;
+				DisplaySkinsWindow();
 			}
-			if (a > 176 && a < 248 && b>264 && b < 336  && skinVulpe != 2){ // click pe al doilea skin
-                skinVulpe = 2;
-                DisplaySkinsWindow();
+			if (a > 176 && a < 248 && b>264 && b < 336 && skinVulpe != 2) { // click pe al doilea skin
+				skinVulpe = 2;
+				DisplaySkinsWindow();
 			}
-            if (a > 285 && a < 357 && b>264 && b < 336  && skinVulpe != 3){ // click pe al treilea skin
-                skinVulpe = 3;
-                DisplaySkinsWindow();
+			if (a > 285 && a < 357 && b>264 && b < 336 && skinVulpe != 3) { // click pe al treilea skin
+				skinVulpe = 3;
+				DisplaySkinsWindow();
 			}
-            if (a > 453 && a < 508 && b>264 && b < 336  && skinCaine != 4){ // click pe al patrulea skin
-                skinCaine = 4;
-                DisplaySkinsWindow();
+			if (a > 453 && a < 508 && b>264 && b < 336 && skinCaine != 4) { // click pe al patrulea skin
+				skinCaine = 4;
+				DisplaySkinsWindow();
 			}
-            if (a > 553 && a < 629 && b>264 && b < 336 && skinCaine != 5){ // click pe al cincilea skin
-                skinCaine = 5;
-                DisplaySkinsWindow();
+			if (a > 553 && a < 629 && b>264 && b < 336 && skinCaine != 5) { // click pe al cincilea skin
+				skinCaine = 5;
+				DisplaySkinsWindow();
 			}
-            if (a > 661 && a < 739 && b>264 && b < 336 && skinCaine != 6){ // click pe al saselea skin
-                skinCaine = 6;
-                DisplaySkinsWindow();
+			if (a > 661 && a < 739 && b>264 && b < 336 && skinCaine != 6) { // click pe al saselea skin
+				skinCaine = 6;
+				DisplaySkinsWindow();
 			}
-			if (a > 362 && a < 456 && b>453 && b < 467){ // click pe back
-                meniu();
-                return;
+			if (a > 362 && a < 456 && b>453 && b < 467) { // click pe back
+				meniu();
+				return;
 			}
 
 		}
@@ -401,10 +1308,10 @@ void SkinsWindow(){
 
 int main()
 {
-	initwindow(800, 600);
+	initwindow(900, 600, "Cainii&Vulpea");
 	meniu();
 	int a, b;
-	int m = 0;
+	int m = 0, OK = 1;
 	do
 	{
 		if (ismouseclick(WM_LBUTTONDOWN))
@@ -412,12 +1319,28 @@ int main()
 			clearmouseclick(WM_LBUTTONDOWN);
 			a = mousex();
 			b = mousey();
-			if (a > 220 && a < 600 && b>245 && b < 275)
-				JucatorVsJucator();
-			if (a > 360 && a < 445 && b > 325 && b < 345)
-                SkinsWindow();
+			//cout << a << endl << b << endl;
+			//cout<<"f";
+
+			if (a > 260 && a < 667 && b>160 && b < 189)
+			{
+
+				CalculatorVsJucator();
+
+			}
+			else
+				if (a > 409 && a < 519 && b > 328 && b < 363)
+					SkinsWindow();
+				else if (a > 294 && a < 643 && b>247 && b < 275)
+					JucatorVsJucator();
+				else if (a > 349 && a < 568 && b>402 && b < 436)
+					cout << "cum te joci";
+				else if (a > 408 && a < 474 && b>524 && b < 522)
+					cout << "setari";
+
+			//cout<<"f ";
 		}
-	} while (m == 0);
+	} while (1);
 	getch();
 	closegraph();
 	return 0;
